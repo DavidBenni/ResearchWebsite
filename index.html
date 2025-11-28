@@ -1,99 +1,484 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Anna Keller – Research Website</title>
+  <title>Nova Quinn – Extraterrestrial Research Uplink</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Personal research website of Anna Keller, PhD Candidate in Machine Learning at the University of Zurich.">
+  <meta name="description"
+        content="Personal research site of Nova Quinn, PhD candidate trying to prove we are not alone before the uplink window closes.">
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
+    :root {
+      --bg-main: #050816;
+      --bg-alt: #090521;
+      --accent-pink: #ff6edb;
+      --accent-cyan: #4af2c5;
+      --accent-yellow: #ffe66d;
+      --accent-purple: #a66bff;
+      --text-main: #fdfcff;
+      --text-muted: #b5b5d6;
+      --chip-bg: rgba(11, 14, 40, 0.85);
+      --glass: rgba(6, 10, 34, 0.82);
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --radius-xl: 2.4rem;
+      --radius-pill: 999px;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.55);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     html {
       scroll-behavior: smooth;
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background-color: #f8f9fa;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(255, 110, 219, 0.18) 0, transparent 50%),
+        radial-gradient(circle at 90% 10%, rgba(74, 242, 197, 0.16) 0, transparent 55%),
+        radial-gradient(circle at 10% 80%, rgba(255, 230, 109, 0.16) 0, transparent 55%),
+        linear-gradient(135deg, var(--bg-main), var(--bg-alt));
+      color: var(--text-main);
+      min-height: 100vh;
+      padding-bottom: 4rem;
     }
 
-    /* Layout spacing */
     main {
-      padding-top: 5rem; /* Platz für fixed Navbar */
-      padding-bottom: 3rem;
+      padding-top: 6.5rem; /* Platz für pillige Navbar */
     }
 
-    section {
-      padding-top: 3rem;
-      padding-bottom: 3rem;
-      border-bottom: 1px solid #e9ecef;
+    /* Floating background orbits */
+    .bg-orbit {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.55;
+      z-index: -2;
+      pointer-events: none;
+      mix-blend-mode: screen;
     }
 
-    section:last-of-type {
-      border-bottom: none;
+    .bg-orbit-1 {
+      width: 320px;
+      height: 320px;
+      top: -80px;
+      left: -40px;
+      background: radial-gradient(circle, var(--accent-pink), transparent 70%);
     }
 
-    .section-title {
-      font-size: 1.75rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
+    .bg-orbit-2 {
+      width: 380px;
+      height: 380px;
+      bottom: -140px;
+      right: -40px;
+      background: radial-gradient(circle, var(--accent-cyan), transparent 70%);
     }
 
-    .hero-name {
-      font-size: 2.5rem;
-      font-weight: 700;
+    .bg-orbit-3 {
+      width: 260px;
+      height: 260px;
+      top: 40%;
+      left: 60%;
+      background: radial-gradient(circle, var(--accent-purple), transparent 70%);
     }
 
-    .hero-subtitle {
-      font-size: 1.1rem;
-      color: #6c757d;
-    }
-
-    .nav-link {
-      font-size: 0.95rem;
+    /* NAVBAR – pill, neon, no corners */
+    #mainNavbar {
+      position: fixed;
+      top: 1.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1120px, 100% - 2rem);
+      border-radius: var(--radius-pill);
+      background: linear-gradient(120deg,
+        rgba(5, 8, 40, 0.96),
+        rgba(12, 10, 54, 0.96));
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding-inline: 0.75rem;
+      z-index: 1030;
+      backdrop-filter: blur(20px);
     }
 
     .navbar-brand {
-      font-weight: 600;
-      letter-spacing: 0.04em;
+      font-weight: 700;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
+      color: var(--accent-cyan) !important;
     }
 
+    .navbar {
+      --bs-navbar-toggler-border-color: transparent;
+      --bs-navbar-color: var(--text-muted);
+      --bs-navbar-hover-color: var(--accent-pink);
+      --bs-navbar-brand-hover-color: var(--accent-cyan);
+    }
+
+    .navbar-nav .nav-link {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding-inline: 0.9rem;
+      border-radius: var(--radius-pill);
+      transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+    }
+
+    .navbar-nav .nav-link.active,
+    .navbar-nav .nav-link:focus,
+    .navbar-nav .nav-link:hover {
+      background: radial-gradient(circle at top left,
+                rgba(255, 110, 219, 0.35),
+                rgba(74, 242, 197, 0.15));
+      color: #fff !important;
+      transform: translateY(-1px);
+    }
+
+    .dropdown-menu {
+      border-radius: 1.6rem;
+      padding: 0.4rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: radial-gradient(circle at top left,
+                    rgba(255, 110, 219, 0.2),
+                    rgba(5, 8, 40, 0.98));
+      box-shadow: var(--shadow-soft);
+    }
+
+    .dropdown-item {
+      border-radius: 999px;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+    }
+
+    .dropdown-item:hover {
+      background: rgba(0, 0, 0, 0.2);
+      color: #fff;
+    }
+
+    .navbar-toggler {
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .navbar-toggler:focus {
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
+    }
+
+    /* SECTION CONTAINERS */
+    main > .shell {
+      margin-top: 0.75rem;
+    }
+
+    section {
+      margin-bottom: 2rem;
+      padding: 2.5rem 1.8rem;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-subtle);
+      background: var(--glass);
+      backdrop-filter: blur(24px);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    section::before {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      opacity: 0.14;
+      filter: blur(20px);
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Color blocking per section */
+    section:nth-of-type(1)::before {
+      background: radial-gradient(circle, var(--accent-cyan), transparent 70%);
+      top: -40px;
+      right: -30px;
+    }
+
+    section:nth-of-type(2)::before {
+      background: radial-gradient(circle, var(--accent-pink), transparent 70%);
+      bottom: -60px;
+      left: -20px;
+    }
+
+    section:nth-of-type(3)::before {
+      background: radial-gradient(circle, var(--accent-yellow), transparent 70%);
+      top: -60px;
+      left: 40%;
+    }
+
+    section:nth-of-type(4)::before {
+      background: radial-gradient(circle, var(--accent-purple), transparent 70%);
+      bottom: -50px;
+      right: 10%;
+    }
+
+    section:nth-of-type(5)::before {
+      background: radial-gradient(circle, var(--accent-cyan), transparent 70%);
+      top: -40px;
+      left: -10%;
+    }
+
+    section:nth-of-type(6)::before {
+      background: radial-gradient(circle, var(--accent-pink), transparent 70%);
+      bottom: -40px;
+      right: -10%;
+    }
+
+    section:nth-of-type(7)::before {
+      background: radial-gradient(circle, var(--accent-yellow), transparent 70%);
+      top: -40px;
+      right: 20%;
+    }
+
+    section:nth-of-type(8)::before {
+      background: radial-gradient(circle, var(--accent-purple), transparent 70%);
+      bottom: -40px;
+      left: 25%;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      color: var(--accent-cyan);
+    }
+
+    .section-title span {
+      color: var(--accent-pink);
+    }
+
+    p {
+      color: var(--text-muted);
+    }
+
+    /* HERO / HOME */
+    .hero-name {
+      font-size: clamp(2.4rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent-yellow);
+      margin-bottom: 1.2rem;
+    }
+
+    .pill-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-radius: var(--radius-pill);
+      padding: 0.35rem 0.85rem;
+      background: var(--chip-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      backdrop-filter: blur(14px);
+    }
+
+    .pill-chip-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      box-shadow: 0 0 12px var(--accent-cyan);
+    }
+
+    .hero-orbit {
+      position: relative;
+      border-radius: var(--radius-xl);
+      padding: 1.5rem;
+      background: radial-gradient(circle at top left,
+                  rgba(255, 110, 219, 0.35),
+                  rgba(5, 8, 40, 0.95));
+    }
+
+    .hero-orbit::before,
+    .hero-orbit::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 255, 255, 0.16);
+      inset: 0.2rem;
+      pointer-events: none;
+    }
+
+    .hero-orbit::after {
+      inset: 1.1rem;
+      border-style: solid;
+      border-image: linear-gradient(120deg, var(--accent-cyan), var(--accent-pink)) 1;
+      opacity: 0.12;
+    }
+
+    /* BUTTONS */
+    .btn,
+    .btn-sm,
+    .btn-lg {
+      border-radius: var(--radius-pill) !important;
+      border-width: 1px;
+    }
+
+    .btn-neon-primary {
+      background: linear-gradient(120deg, var(--accent-pink), var(--accent-cyan));
+      border-color: transparent;
+      color: #050816;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      box-shadow: 0 8px 25px rgba(255, 110, 219, 0.45);
+    }
+
+    .btn-neon-primary:hover {
+      filter: brightness(1.1);
+      color: #050816;
+    }
+
+    .btn-neon-ghost {
+      background: rgba(5, 8, 40, 0.3);
+      border-color: rgba(255, 255, 255, 0.22);
+      color: var(--text-main);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .btn-neon-ghost:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    /* BADGES / TAGS */
     .badge-year {
-      font-size: 0.75rem;
-      font-weight: 500;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      padding: 0.3rem 0.8rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      background: radial-gradient(circle at top left,
+                  rgba(255, 230, 109, 0.4),
+                  rgba(5, 8, 40, 0.95));
     }
 
     .cv-item-title {
       font-weight: 600;
+      color: #fff;
     }
 
     .misc-pill {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.16em;
+      color: var(--accent-yellow);
     }
 
     .contact-link {
+      color: var(--accent-cyan);
       text-decoration: none;
     }
 
     .contact-link:hover {
       text-decoration: underline;
+      color: var(--accent-pink);
+    }
+
+    .card {
+      background: rgba(5, 8, 40, 0.9);
+      border-radius: 1.8rem;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-body {
+      color: var(--text-muted);
+    }
+
+    /* TABLES */
+    .table {
+      color: var(--text-muted);
+    }
+
+    .table > :not(caption) > * > * {
+      background: transparent;
+      border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Countdown chip */
+    .countdown-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-radius: var(--radius-pill);
+      padding: 0.4rem 0.9rem;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      background: radial-gradient(circle at top left,
+                  rgba(255, 110, 219, 0.3),
+                  rgba(5, 8, 40, 0.9));
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 6px 20px rgba(255, 110, 219, 0.45);
+    }
+
+    .countdown-label {
+      color: var(--accent-yellow);
+    }
+
+    .countdown-value {
+      font-variant-numeric: tabular-nums;
+      color: #fff;
+    }
+
+    /* SMALL SCREEN TWEAKS */
+    @media (max-width: 767.98px) {
+      section {
+        padding: 2rem 1.3rem;
+        border-radius: 1.8rem;
+      }
+
+      #mainNavbar {
+        width: calc(100% - 1.5rem);
+      }
     }
   </style>
 </head>
-<body data-bs-spy="scroll" data-bs-target="#mainNavbar" data-bs-offset="80" tabindex="0">
+<body data-bs-spy="scroll" data-bs-target="#mainNavbar" data-bs-offset="100" tabindex="0">
+
+  <!-- Background Orbits -->
+  <div class="bg-orbit bg-orbit-1"></div>
+  <div class="bg-orbit bg-orbit-2"></div>
+  <div class="bg-orbit bg-orbit-3"></div>
 
   <!-- NAVBAR -->
-  <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="#home">Anna Keller</a>
+  <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#home">NQ · UPLINK</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Navigation ein-/ausblenden">
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -103,7 +488,7 @@
             <a class="nav-link active" aria-current="page" href="#home">Home</a>
           </li>
 
-          <!-- Research mit Dropdown -->
+          <!-- Research Dropdown -->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#research" id="researchDropdown" role="button"
                data-bs-toggle="dropdown" aria-expanded="false">
@@ -111,9 +496,9 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="researchDropdown">
               <li><a class="dropdown-item" href="#research">Overview</a></li>
-              <li><a class="dropdown-item" href="#publications">Publications</a></li>
-              <li><a class="dropdown-item" href="#working-papers">Working Papers</a></li>
-              <li><a class="dropdown-item" href="#talks">Talks</a></li>
+              <li><a class="dropdown-item" href="#publications">Signals &amp; Papers</a></li>
+              <li><a class="dropdown-item" href="#working-papers">Working Notes</a></li>
+              <li><a class="dropdown-item" href="#talks">Broadcasts</a></li>
             </ul>
           </li>
 
@@ -138,53 +523,70 @@
   </nav>
 
   <!-- MAIN CONTENT -->
-  <main class="container">
+  <main class="container shell">
 
     <!-- HOME / HERO -->
     <section id="home">
-      <div class="row align-items-center g-4">
-        <div class="col-md-8">
-          <h1 class="hero-name mb-2">Anna Keller</h1>
-          <p class="hero-subtitle mb-3">
-            PhD Candidate in Machine Learning · University of Zurich
+      <div class="row g-4 align-items-center">
+        <div class="col-md-7">
+          <div class="pill-chip mb-3">
+            <span class="pill-chip-dot"></span>
+            <span>Uplink active · not for long</span>
+          </div>
+          <h1 class="hero-name">Nova Quinn</h1>
+          <p class="hero-subtitle">
+            PhD CANDIDATE · EXTRATERRESTRIAL SIGNALS &amp; ANOMALOUS DATA
           </p>
-          <p class="mb-3">
-            I am a fourth-year PhD candidate in the <strong>Machine Learning &amp; Climate Risk</strong> group at the
-            University of Zurich, advised by <em>Prof. Markus Vogel</em>. My research focuses on scalable probabilistic
-            models for climate extremes and robust decision-making under distribution shifts.
+          <p>
+            I am a PhD candidate trying to answer a single question:
+            <strong>how much evidence for non-human intelligence is already hiding in plain sight?</strong>
+            I fuse open astronomical surveys, declassified archives and anomaly detection to map the edge of the
+            known.
           </p>
-          <p class="mb-3">
-            Broadly, I am interested in <strong>probabilistic ML</strong>, <strong>Bayesian deep learning</strong>, and
-            <strong>trustworthy AI</strong> for high-stakes environmental applications.
+          <p>
+            This page is my <strong>last-minute uplink</strong> before institutional clocks, NDAs and inboxes
+            shut everything down. If you’re reading this, the window didn’t close fast enough.
           </p>
-          <div class="d-flex flex-wrap gap-2 mt-3">
-            <a href="#research" class="btn btn-dark btn-sm">View research</a>
-            <a href="#cv" class="btn btn-outline-secondary btn-sm">Short CV</a>
+
+          <div class="d-flex flex-wrap gap-2 mt-4">
+            <a href="#research" class="btn btn-neon-primary btn-sm">Enter signal stack</a>
+            <a href="#cv" class="btn btn-neon-ghost btn-sm">Decrypted CV</a>
+          </div>
+
+          <div class="mt-4 d-flex flex-wrap align-items-center gap-3">
+            <div class="countdown-pill" id="uplinkCountdown">
+              <span class="countdown-label">Uplink window</span>
+              <span class="countdown-value" data-countdown>--:--:--</span>
+            </div>
+            <span class="small text-muted">
+              Approximate time left before this channel goes dark.
+            </span>
           </div>
         </div>
-        <div class="col-md-4">
-          <!-- Platz für Foto / Avatar / Logos -->
-          <div class="card border-0 shadow-sm">
-            <div class="card-body">
-              <h6 class="text-uppercase text-muted mb-3" style="letter-spacing: 0.08em;">Affiliation</h6>
-              <p class="mb-1"><strong>Machine Learning &amp; Climate Risk Lab</strong></p>
-              <p class="mb-1">Department of Informatics</p>
-              <p class="mb-1">University of Zurich</p>
-              <p class="mb-0 text-muted">Zurich, Switzerland</p>
-              <hr>
-              <p class="mb-1">
-                <span class="text-muted">Email:</span><br>
-                <a href="mailto:anna.keller@uzh.ch" class="contact-link">anna.keller@uzh.ch</a>
-              </p>
-              <p class="mb-0">
-                <span class="text-muted">GitHub / Scholar / LinkedIn:</span><br>
-                <a href="#" class="contact-link me-2">GitHub</a>
-                ·
-                <a href="#" class="contact-link mx-2">Scholar</a>
-                ·
-                <a href="#" class="contact-link ms-2">LinkedIn</a>
-              </p>
-            </div>
+
+        <div class="col-md-5">
+          <div class="hero-orbit">
+            <h6 class="misc-pill mb-3">Current location</h6>
+            <p class="mb-2">
+              <strong>Signal Cartography Lab</strong><br>
+              Institute for Unusual Data, Northern Hemisphere (undisclosed)
+            </p>
+            <p class="mb-2 small">
+              I cross-reference <strong>radio telescopes</strong>, <strong>satellite telemetry</strong> and
+              <strong>declassified intelligence reports</strong> to hunt for consistent non-human patterns.
+            </p>
+            <p class="mb-2 small">
+              Status: <span style="color: var(--accent-cyan)">operational</span> · Clearance:
+              <span style="color: var(--accent-yellow)">fragile</span>
+            </p>
+            <hr class="border-secondary border-opacity-25">
+            <p class="mb-1 small">
+              Email: <a href="mailto:nova@uplink.labs" class="contact-link">nova@uplink.labs</a>
+            </p>
+            <p class="mb-0 small">
+              GitHub / Archive: <a href="#" class="contact-link">/nova-q</a> ·
+              <a href="#" class="contact-link">Public signal vault</a>
+            </p>
           </div>
         </div>
       </div>
@@ -192,46 +594,50 @@
 
     <!-- RESEARCH OVERVIEW -->
     <section id="research">
-      <h2 class="section-title">Research</h2>
+      <h2 class="section-title">Research <span>Vector</span></h2>
       <p>
-        My work lies at the intersection of <strong>probabilistic modeling</strong>, <strong>deep learning</strong> and
-        <strong>climate science</strong>. I aim to build models that provide calibrated uncertainty estimates and remain
-        robust under distribution shifts induced by climate change.
+        My work lives where <strong>astrostatistics</strong>, <strong>machine learning</strong> and
+        <strong>leaked / declassified archives</strong> collide. I design pipelines that treat sky surveys and
+        intelligence dumps as one continuous, messy dataset – then ask:
+        <em>does anything in here look more like intent than noise?</em>
       </p>
 
       <div class="row g-3 mt-3">
         <div class="col-md-4">
-          <div class="card h-100 border-0 shadow-sm">
+          <div class="card h-100">
             <div class="card-body">
-              <h6 class="text-uppercase text-muted misc-pill mb-2">Focus Area</h6>
-              <h5 class="card-title mb-2">Probabilistic Deep Learning</h5>
-              <p class="card-text small mb-0">
-                Approximate inference methods, variational objectives, and scalable Bayesian neural networks applied to
-                spatio-temporal climate data.
+              <h6 class="misc-pill mb-2">Signal mining</h6>
+              <h5 class="card-title mb-2">Anomalous sky patterns</h5>
+              <p class="small mb-0">
+                Deep anomaly models on radio and optical surveys, hunting for
+                <strong>persistent non-terrestrial signatures</strong> across time, frequency and instrument.
               </p>
             </div>
           </div>
         </div>
 
         <div class="col-md-4">
-          <div class="card h-100 border-0 shadow-sm">
+          <div class="card h-100">
             <div class="card-body">
-              <h6 class="text-uppercase text-muted misc-pill mb-2">Focus Area</h6>
-              <h5 class="card-title mb-2">Extreme Events</h5>
-              <p class="card-text small mb-0">
-                Tail modeling of heat waves and heavy precipitation using extreme value theory and generative models.
+              <h6 class="misc-pill mb-2">Classified echoes</h6>
+              <h5 class="card-title mb-2">Declassified &amp; leaked archives</h5>
+              <p class="small mb-0">
+                Topic models and sequence tagging over FOIA releases, historic intelligence reports and
+                incident logs, looking for recurring <strong>non-human craft narratives</strong>.
               </p>
             </div>
           </div>
         </div>
 
         <div class="col-md-4">
-          <div class="card h-100 border-0 shadow-sm">
+          <div class="card h-100">
             <div class="card-body">
-              <h6 class="text-uppercase text-muted misc-pill mb-2">Focus Area</h6>
-              <h5 class="card-title mb-2">Decision Making</h5>
-              <p class="card-text small mb-0">
-                Robust optimization and uncertainty-aware policies for climate risk management and infrastructure planning.
+              <h6 class="misc-pill mb-2">Consistency checks</h6>
+              <h5 class="card-title mb-2">Cross-domain alignment</h5>
+              <p class="small mb-0">
+                If the same latent anomaly shows up in <strong>sky data</strong> and
+                <strong>classified documents</strong>, either the universe is trolling us – or someone isn’t
+                telling the full story.
               </p>
             </div>
           </div>
@@ -239,74 +645,76 @@
       </div>
     </section>
 
-    <!-- PUBLICATIONS -->
+    <!-- PUBLICATIONS / SIGNALS -->
     <section id="publications">
-      <h2 class="section-title">Publications</h2>
+      <h2 class="section-title">Signals &amp; <span>Papers</span></h2>
 
       <div class="mb-3">
-        <span class="badge bg-dark badge-year">2025</span>
+        <span class="badge-year">2025 · pre-print uplink</span>
         <p class="mt-2 mb-1">
-          <span class="fw-semibold">Calibrated Generative Models for Climate Extremes</span><br>
-          A. Keller, J. Braun, M. Vogel.<br>
-          <em>NeurIPS 2025 (to appear)</em>
+          <span class="cv-item-title">Convergent Anomalies in Sky Surveys and Intelligence Archives</span><br>
+          N. Quinn<br>
+          <em>under review, Journal of Unusual Data</em>
         </p>
         <p class="small text-muted mb-1">
-          We propose a generative model combining extreme value theory with diffusion models to better capture the tail behavior of temperature extremes.
+          Joint embedding of radio survey anomalies and redacted intelligence reports. Result:
+          several clusters that refuse to look like sensor failure – or like us.
         </p>
         <p class="small mb-0">
-          [<a href="#">preprint</a>] [<a href="#">code</a>]
+          [<a href="#" class="contact-link">preprint</a>] [<a href="#" class="contact-link">synthetic data</a>]
         </p>
       </div>
 
       <div class="mb-3">
-        <span class="badge bg-dark badge-year">2024</span>
+        <span class="badge-year">2024</span>
         <p class="mt-2 mb-1">
-          <span class="fw-semibold">Robust Bayesian Neural Networks under Climate Shifts</span><br>
-          A. Keller, L. Huang, M. Vogel.<br>
-          <em>ICML 2024</em>
+          <span class="cv-item-title">Bayesian Filters for Non-Human Intent</span><br>
+          N. Quinn, A. Reyes<br>
+          <em>NeurIPS Workshop on Anomalous Intelligence</em>
         </p>
         <p class="small text-muted mb-1">
-          We study robustness properties of Bayesian neural networks under non-stationary climate distributions and
-          introduce a shift-aware prior.
+          A probabilistic framework that defines “intent-like trajectories” in noisy observational data without
+          assuming human agency – or even humans.
         </p>
         <p class="small mb-0">
-          [<a href="#">paper</a>] [<a href="#">code</a>] [<a href="#">talk</a>]
+          [<a href="#" class="contact-link">paper</a>] [<a href="#" class="contact-link">code</a>]
         </p>
       </div>
 
       <div class="mb-3">
-        <span class="badge bg-dark badge-year">2023</span>
+        <span class="badge-year">2023</span>
         <p class="mt-2 mb-1">
-          <span class="fw-semibold">Uncertainty Quantification for Regional Climate Projections</span><br>
-          A. Keller, T. Meier.<br>
-          <em>Journal of Climate Informatics</em>
+          <span class="cv-item-title">What Survives Redaction</span><br>
+          N. Quinn<br>
+          <em>Proceedings of the Archive Mining Conference</em>
         </p>
         <p class="small text-muted mb-1">
-          Hierarchical Bayesian modeling to quantify uncertainty in regional climate projections and communicate risks to stakeholders.
+          Language models over heavily redacted documents, quantifying how much semantic structure survives the
+          black marker – and what that implies about what was there.
         </p>
         <p class="small mb-0">
-          [<a href="#">paper</a>]
+          [<a href="#" class="contact-link">paper</a>]
         </p>
       </div>
     </section>
 
     <!-- WORKING PAPERS -->
     <section id="working-papers">
-      <h2 class="section-title">Working Papers</h2>
-
+      <h2 class="section-title">Working <span>Notes</span></h2>
       <ul class="list-unstyled">
         <li class="mb-3">
-          <div class="cv-item-title">Active Learning for Rare Climate Events</div>
-          <div class="small text-muted mb-1">with S. Novak, M. Vogel · 2025</div>
+          <div class="cv-item-title">The Persistent Object Hypothesis</div>
+          <div class="small text-muted mb-1">2025 · draft in progress</div>
           <div class="small">
-            Developing acquisition strategies that focus on tail events in climate simulations to improve risk estimates.
+            Clustering unexplained objects across decades of reports and sensor logs. Same altitudes, same
+            accelerations, different cover stories.
           </div>
         </li>
         <li class="mb-3">
-          <div class="cv-item-title">Bayesian Spatio-Temporal Transformers</div>
-          <div class="small text-muted mb-1">solo-authored · 2024</div>
+          <div class="cv-item-title">Aliens, But Make It Bayesian</div>
+          <div class="small text-muted mb-1">2024 · notes</div>
           <div class="small">
-            Bayesian versions of transformer architectures tailored to global climate reanalysis data.
+            A prior over intelligent non-human civilizations that says, “yes, but show me the posterior.”
           </div>
         </li>
       </ul>
@@ -314,90 +722,84 @@
 
     <!-- TALKS -->
     <section id="talks">
-      <h2 class="section-title">Selected Talks</h2>
-
+      <h2 class="section-title">Broadcasts &amp; <span>Talks</span></h2>
       <ul class="list-unstyled">
         <li class="mb-2">
-          <span class="fw-semibold">Calibrated Generative Models for Climate Extremes</span><br>
-          <span class="small text-muted">NeurIPS 2025, Vancouver · Climate Change and ML Workshop</span>
+          <span class="cv-item-title">When the Sky and the Archives Agree</span><br>
+          <span class="small text-muted">Anomalous Intelligence Summit 2025 · Keynote</span>
         </li>
         <li class="mb-2">
-          <span class="fw-semibold">Robust BNNs for Climate Risk</span><br>
-          <span class="small text-muted">ICML 2024, Vienna · Workshop on Distribution Shifts</span>
+          <span class="cv-item-title">How to Not Hallucinate Aliens (Statistically)</span><br>
+          <span class="small text-muted">ML for Astronomy Workshop · NeurIPS 2024</span>
         </li>
         <li class="mb-2">
-          <span class="fw-semibold">Uncertainty Quantification in Climate Projections</span><br>
-          <span class="small text-muted">ETH Zurich, Climate &amp; AI Seminar, 2023</span>
+          <span class="cv-item-title">What We Learned From 10,000 Redacted Pages</span><br>
+          <span class="small text-muted">Archive Mining Conference 2023</span>
         </li>
       </ul>
     </section>
 
     <!-- TEACHING -->
     <section id="teaching">
-      <h2 class="section-title">Teaching</h2>
-
+      <h2 class="section-title">Teaching <span>Signals</span></h2>
       <p class="mb-3">
-        I enjoy teaching and mentoring students at the intersection of machine learning and climate science.
+        Occasionally I’m allowed to teach, too. I focus on anomaly detection, Bayesian reasoning and
+        responsible speculation.
       </p>
 
       <div class="table-responsive">
         <table class="table table-sm align-middle">
           <thead>
-            <tr>
-              <th scope="col" style="width: 10%;">Year</th>
-              <th scope="col" style="width: 35%;">Course</th>
-              <th scope="col" style="width: 20%;">Role</th>
-              <th scope="col" style="width: 35%;">Notes</th>
-            </tr>
+          <tr>
+            <th scope="col" style="width: 10%;">Year</th>
+            <th scope="col" style="width: 35%;">Course</th>
+            <th scope="col" style="width: 20%;">Role</th>
+            <th scope="col" style="width: 35%;">Notes</th>
+          </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>2025</td>
-              <td>Advanced Topics in Probabilistic ML</td>
-              <td>Co-lecturer</td>
-              <td>Designed a module on Bayesian deep learning.</td>
-            </tr>
-            <tr>
-              <td>2024</td>
-              <td>Machine Learning for Climate Science</td>
-              <td>Teaching Assistant</td>
-              <td>Led exercise sessions, project supervision.</td>
-            </tr>
-            <tr>
-              <td>2023</td>
-              <td>Introduction to Machine Learning</td>
-              <td>Teaching Assistant</td>
-              <td>Grading, tutorials, office hours (~120 students).</td>
-            </tr>
+          <tr>
+            <td>2025</td>
+            <td>Anomaly Detection for Astronomers</td>
+            <td>Co-Lecturer</td>
+            <td>From outliers to “ok, but what if it’s aliens?” (carefully).</td>
+          </tr>
+          <tr>
+            <td>2024</td>
+            <td>Bayesian Thinking for Weird Data</td>
+            <td>TA</td>
+            <td>Exercises on priors, posteriors, and not over-updating on UFO videos.</td>
+          </tr>
+          <tr>
+            <td>2023</td>
+            <td>Intro to Machine Learning</td>
+            <td>TA</td>
+            <td>Standard ML course, zero aliens promised, some aliens implied.</td>
+          </tr>
           </tbody>
         </table>
       </div>
-
-      <p class="small text-muted mb-0">
-        I am open to external tutorials or guest lectures on probabilistic ML and climate applications.
-      </p>
     </section>
 
     <!-- CV -->
     <section id="cv">
-      <h2 class="section-title">Curriculum Vitae</h2>
-
+      <h2 class="section-title">Curriculum <span>Vitae</span></h2>
       <div class="row g-4">
         <div class="col-md-6">
           <h5 class="mb-2">Education</h5>
           <ul class="list-unstyled small">
             <li class="mb-2">
-              <span class="fw-semibold">PhD in Computer Science</span><br>
-              University of Zurich, Switzerland · 2021–present<br>
-              Thesis (working title): <em>Probabilistic Models for Climate Extremes</em>
+              <span class="cv-item-title">PhD in Anomalous Data &amp; Extraterrestrial Signals</span><br>
+              Institute for Unusual Data · 2021–present<br>
+              Thesis: <em>Consistent Non-Human Patterns in Heterogeneous Datasets</em>
             </li>
             <li class="mb-2">
-              <span class="fw-semibold">MSc in Data Science</span><br>
-              ETH Zurich · 2019–2021
+              <span class="cv-item-title">MSc in Machine Learning</span><br>
+              Somewhere Respectable · 2019–2021
             </li>
             <li class="mb-2">
-              <span class="fw-semibold">BSc in Computer Science</span><br>
-              TU Munich · 2016–2019
+              <span class="cv-item-title">BSc in Physics</span><br>
+              Same Planet · 2016–2019
             </li>
           </ul>
         </div>
@@ -406,21 +808,20 @@
           <h5 class="mb-2">Selected Awards</h5>
           <ul class="list-unstyled small">
             <li class="mb-2">
-              Best Paper Award, Climate &amp; ML Workshop, NeurIPS 2024
+              Best Weird Paper, Anomalous Intelligence Summit 2024
             </li>
             <li class="mb-2">
-              Excellence Scholarship, ETH Zurich (2019–2021)
+              “Most likely to accidentally prove something important”, internal lab award
             </li>
             <li class="mb-2">
-              Dean's List, TU Munich (3x)
+              Scholarship for Unconventional Research Directions
             </li>
           </ul>
         </div>
       </div>
 
       <div class="mt-3">
-        <!-- Passe den Link an, sobald du eine echte PDF hochlädst -->
-        <a href="cv.pdf" class="btn btn-outline-dark btn-sm" target="_blank" rel="noopener">
+        <a href="cv.pdf" class="btn btn-neon-ghost btn-sm" target="_blank" rel="noopener">
           Download full CV (PDF)
         </a>
       </div>
@@ -428,33 +829,36 @@
 
     <!-- MISC -->
     <section id="misc">
-      <h2 class="section-title">Misc</h2>
-
+      <h2 class="section-title">Misc <span>Orbit</span></h2>
       <div class="row g-3">
         <div class="col-md-6">
-          <div class="card border-0 shadow-sm h-100">
+          <div class="card h-100">
             <div class="card-body">
-              <h5 class="card-title mb-2">Open Source</h5>
+              <h5 class="card-title mb-2">Open (and half-open) source</h5>
               <p class="small mb-2">
-                I maintain and contribute to open-source tools around probabilistic ML and climate data:
+                Some tools I release so others don’t have to reinvent them in a panic:
               </p>
               <ul class="small mb-0">
-                <li><code>climate-bnn</code> – Bayesian neural network toolkit for climate data.</li>
-                <li><code>extreme-flows</code> – Flow-based models for extremes (work in progress).</li>
+                <li><code>anomaly-atlas</code> – A map of weird things seen by telescopes.</li>
+                <li><code>redact-gym</code> – Simulated redacted documents for model training.</li>
+                <li><code>uplink-kit</code> – Minimal pipelines to publish datasets before the clock runs out.</li>
               </ul>
             </div>
           </div>
         </div>
 
         <div class="col-md-6">
-          <div class="card border-0 shadow-sm h-100">
+          <div class="card h-100">
             <div class="card-body">
-              <h5 class="card-title mb-2">Service</h5>
-              <ul class="small mb-0">
-                <li>Reviewer: NeurIPS, ICML, ICLR, JMLR</li>
-                <li>Co-organizer: Climate &amp; ML Reading Group (UZH/ETH)</li>
-                <li>Mentor: Women in ML Zurich</li>
-              </ul>
+              <h5 class="card-title mb-2">Fine print</h5>
+              <p class="small mb-2">
+                This site is a <strong>research narrative</strong>, not an instruction manual.
+                No actual classified data is hosted or linked here – only publicly available or simulated material.
+              </p>
+              <p class="small mb-0">
+                If you think you’ve found something real and dangerous here, you probably haven’t. But you can still
+                <a href="#contact" class="contact-link">tell me</a>.
+              </p>
             </div>
           </div>
         </div>
@@ -463,59 +867,61 @@
 
     <!-- CONTACT -->
     <section id="contact">
-      <h2 class="section-title">Contact</h2>
-
+      <h2 class="section-title">Contact <span>Channel</span></h2>
       <div class="row g-4">
         <div class="col-md-6">
-          <div class="card border-0 shadow-sm">
+          <div class="card">
             <div class="card-body">
-              <h5 class="card-title mb-3">Get in touch</h5>
+              <h5 class="card-title mb-3">Primary uplink</h5>
               <p class="small mb-2">
-                The fastest way to reach me is via email. I am happy to discuss collaborations on probabilistic ML and climate applications.
+                The safest way to reach me is still old-fashioned email. Subject lines that help:
+                <strong>[COLLAB]</strong>, <strong>[DATA]</strong>, <strong>[TALK]</strong>.
               </p>
               <p class="mb-2">
-                <span class="text-muted small d-block">Email</span>
-                <a href="mailto:anna.keller@uzh.ch" class="contact-link">anna.keller@uzh.ch</a>
+                <span class="small text-muted d-block">Email</span>
+                <a href="mailto:nova@uplink.labs" class="contact-link">nova@uplink.labs</a>
               </p>
               <p class="mb-2">
-                <span class="text-muted small d-block">Office</span>
-                Room 4.23, Department of Informatics<br>
-                University of Zurich
+                <span class="small text-muted d-block">Public key (fingerprint)</span>
+                <code class="small">A1B2 C3D4 E5F6 1122 3344 5566 7788 99AA BBCC DDEE</code>
               </p>
-              <p class="mb-0 small text-muted">
-                Please include a short subject line (e.g., “Collaboration”, “Prospective Student”, “Talk Invitation”).
+              <p class="small text-muted mb-0">
+                Please, no real classified material. Seriously. Use this channel for research, ideas and very
+                good sci-fi.
               </p>
             </div>
           </div>
         </div>
 
         <div class="col-md-6">
-          <!-- Simple Kontakt-Formular (nur Frontend) -->
-          <div class="card border-0 shadow-sm">
+          <div class="card">
             <div class="card-body">
-              <h5 class="card-title mb-3">Short message</h5>
+              <h5 class="card-title mb-3">Short message (frontend only)</h5>
               <form>
                 <div class="mb-2">
-                  <label for="contactName" class="form-label small mb-1">Name</label>
-                  <input type="text" class="form-control form-control-sm" id="contactName" placeholder="Your name">
+                  <label for="contactName" class="form-label small mb-1">Call sign</label>
+                  <input type="text" class="form-control form-control-sm" id="contactName"
+                         placeholder="Your codename">
                 </div>
                 <div class="mb-2">
-                  <label for="contactEmail" class="form-label small mb-1">Email</label>
-                  <input type="email" class="form-control form-control-sm" id="contactEmail" placeholder="your@email.com">
+                  <label for="contactEmail" class="form-label small mb-1">Reply channel</label>
+                  <input type="email" class="form-control form-control-sm" id="contactEmail"
+                         placeholder="you@somewhere">
                 </div>
                 <div class="mb-2">
                   <label for="contactMessage" class="form-label small mb-1">Message</label>
                   <textarea class="form-control form-control-sm" id="contactMessage" rows="3"
-                            placeholder="Short message"></textarea>
+                            placeholder="Short transmission"></textarea>
                 </div>
                 <div class="d-grid">
-                  <!-- Button ist nur UI – ohne Backend wird nichts versendet -->
-                  <button type="button" class="btn btn-dark btn-sm" disabled>
-                    Send (frontend only)
+                  <!-- Placeholder only, no backend -->
+                  <button type="button" class="btn btn-neon-primary btn-sm" disabled>
+                    Send (UI only)
                   </button>
                 </div>
                 <p class="small text-muted mt-2 mb-0">
-                  This form is a static placeholder. For real submissions, connect it to a backend or a form service.
+                  This form does not transmit anything yet. Wire it up to a backend or form service if you want
+                  it to actually send.
                 </p>
               </form>
             </div>
@@ -526,16 +932,16 @@
 
   </main>
 
-  <!-- Bootstrap JS Bundle (inkl. Popper) -->
+  <!-- Bootstrap JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- Custom JS -->
   <script>
-    // Collapse mobile navbar after clicking a link
     document.addEventListener("DOMContentLoaded", function () {
       const navLinks = document.querySelectorAll("#navbarSupportedContent .nav-link, #navbarSupportedContent .dropdown-item");
       const navCollapse = document.getElementById("navbarSupportedContent");
 
+      // Collapse mobile nav after click
       navLinks.forEach(function (link) {
         link.addEventListener("click", function () {
           const toggler = document.querySelector(".navbar-toggler");
@@ -547,6 +953,30 @@
           }
         });
       });
+
+      // Simple countdown: 42 hours from first load
+      const countdownEl = document.querySelector("[data-countdown]");
+      if (countdownEl) {
+        const start = new Date();
+        const target = new Date(start.getTime() + 42 * 60 * 60 * 1000); // +42h
+
+        const tick = () => {
+          const now = new Date();
+          let diff = Math.max(0, target - now);
+
+          const hours = Math.floor(diff / (1000 * 60 * 60));
+          diff -= hours * 1000 * 60 * 60;
+          const minutes = Math.floor(diff / (1000 * 60));
+          diff -= minutes * 1000 * 60;
+          const seconds = Math.floor(diff / 1000);
+
+          const pad = (n) => String(n).padStart(2, "0");
+          countdownEl.textContent = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+        };
+
+        tick();
+        setInterval(tick, 1000);
+      }
     });
   </script>
 </body>
